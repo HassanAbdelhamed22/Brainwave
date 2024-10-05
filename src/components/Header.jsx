@@ -1,7 +1,7 @@
 import { brainwave } from "../assets";
 import { navigation } from "../constants";
 import { useLocation } from "react-router-dom";
-import Button from "./Button";
+import Button from "./ui/Button";
 import { HamburgerMenu } from "./design/Header";
 import MenuSvg from "../assets/svg/MenuSvg";
 import { useState } from "react";
