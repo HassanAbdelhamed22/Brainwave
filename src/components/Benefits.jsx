@@ -4,24 +4,49 @@ import { benefits } from "../constants";
 import Arrow from "./../assets/svg/Arrow";
 import { GradientLight } from "./design/Benefits";
 import ClipPath from "./../assets/svg/ClipPath";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { cardVariants, headingVariants } from "../constants/AnimationVariants";
 
 const Benefits = () => {
+  // Set up intersection observer
+  const { ref: headingRef, inView: headingInView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  const { ref: cardRef, inView: cardInView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
   return (
     <Section id="features">
       <div className="container relative z-2">
-        <Heading
-          className="md:max-w-md lg:max-w-2xl md:text-center"
-          title="Chat Smarter, Not Harder with Brainwave"
-        />
+        <motion.div
+          ref={headingRef}
+          initial="hidden"
+          animate={headingInView ? "visible" : "hidden"}
+          variants={headingVariants}
+        >
+          <Heading
+            className="md:max-w-md lg:max-w-2xl md:text-center"
+            title="Chat Smarter, Not Harder with Brainwave"
+          />
+        </motion.div>
 
         <div className="flex flex-wrap gap-10 mb-10">
           {benefits.map((item) => (
-            <div
+            <motion.div
               className="block relative p-0.5 bg-no-repeat bg-[length:100%_100%] md:max-w-[24rem]"
               style={{
                 backgroundImage: `url(${item.backgroundUrl})`,
               }}
               key={item.id}
+              ref={cardRef}
+              variants={cardVariants}
+              initial="hidden"
+              animate={cardInView ? "visible" : "hidden"}
             >
               <div className="relative z-2 flex flex-col min-h-[22rem] p-[2.4rem] pointer-events-none">
                 <h5 className="h5 mb-5">{item.title}</h5>
@@ -60,7 +85,7 @@ const Benefits = () => {
               </div>
 
               <ClipPath />
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

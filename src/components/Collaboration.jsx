@@ -3,18 +3,48 @@ import { collabApps, collabContent, collabText } from "../constants";
 import Button from "./ui/Button";
 import Section from "./ui/Section";
 import { LeftCurve, RightCurve } from "./design/Collaboration";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import {
+  buttonVariants,
+  headingVariants,
+  itemVariants,
+} from "../constants/AnimationVariants";
 
 const Collaboration = () => {
+  // Intersection observers
+  const { ref: headingRef, inView: headingInView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  const { ref: buttonRef, inView: buttonInView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
   return (
     <Section crosses>
       <div className="container lg:flex">
-        <div className="max-w-[25rem]">
+        <motion.div
+          className="max-w-[25rem]"
+          ref={headingRef}
+          initial="hidden"
+          animate={headingInView ? "visible" : "hidden"}
+          variants={headingVariants}
+        >
           <h2 className="h2 mb-4 md:mb-8">
             AI Chat App for seamless collaboration
           </h2>
           <ul className="max-w-[22rem] mb-10 md:mb-14">
             {collabContent.map((item) => (
-              <li key={item.id} className="mb-3 py-3">
+              <motion.li
+                key={item.id}
+                className="mb-3 py-3"
+                initial="hidden"
+                animate={headingInView ? "visible" : "hidden"}
+                variants={itemVariants}
+              >
                 <div className="flex items-center">
                   <img src={check} width={24} height={24} alt="check icon" />
                   <h6 className="body-2 ml-5">{item.title}</h6>
@@ -22,12 +52,19 @@ const Collaboration = () => {
                 {item.text && (
                   <p className="body-2 mt-3 text-n-4">{item.text}</p>
                 )}
-              </li>
+              </motion.li>
             ))}
           </ul>
 
-          <Button>Try it now</Button>
-        </div>
+          <motion.div
+            ref={buttonRef}
+            initial="hidden"
+            animate={buttonInView ? "visible" : "hidden"}
+            variants={buttonVariants}
+          >
+            <Button>Try it now</Button>
+          </motion.div>
+        </motion.div>
 
         <div className="lg:ml-auto xl:w-[38rem] mt-4 lg:mt-2">
           <p className="body-2 mb-8 text-n-4 md:mb-16 lg:mb-32 lg:w-[22rem] lg:mx-auto">

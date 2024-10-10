@@ -5,7 +5,7 @@ import Button from "./ui/Button";
 import { HamburgerMenu } from "./design/Header";
 import MenuSvg from "../assets/svg/MenuSvg";
 import { useState } from "react";
-import { disablePageScroll, enablePageScroll } from 'scroll-lock';
+import { disablePageScroll, enablePageScroll } from "scroll-lock";
 
 const Header = () => {
   const pathname = useLocation();
