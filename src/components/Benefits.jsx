@@ -9,24 +9,12 @@ import { useInView } from "react-intersection-observer";
 import { cardVariants, headingVariants } from "../constants/AnimationVariants";
 
 const Benefits = () => {
-  // Set up intersection observer
-  const { ref: headingRef, inView: headingInView } = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
-  const { ref: cardRef, inView: cardInView } = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
   return (
     <Section id="features">
       <div className="container relative z-2">
         <motion.div
-          ref={headingRef}
           initial="hidden"
-          animate={headingInView ? "visible" : "hidden"}
+          whileInView="visible"
           variants={headingVariants}
         >
           <Heading
@@ -43,10 +31,9 @@ const Benefits = () => {
                 backgroundImage: `url(${item.backgroundUrl})`,
               }}
               key={item.id}
-              ref={cardRef}
               variants={cardVariants}
               initial="hidden"
-              animate={cardInView ? "visible" : "hidden"}
+              whileInView="visible"
             >
               <div className="relative z-2 flex flex-col min-h-[22rem] p-[2.4rem] pointer-events-none">
                 <h5 className="h5 mb-5">{item.title}</h5>
